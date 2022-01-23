@@ -21,7 +21,7 @@ data "aws_ami" "amazon_linux" {
 resource "aws_security_group" "ec2-securegrp" {
   name        = "allow-all-ec2"
   description = "allow all"
-  vpc_id      = data.aws_vpc.main.id
+  vpc_id      = aws_vpc.Main.id
   ingress {
     from_port   = 0
     to_port     = 0
@@ -66,7 +66,7 @@ resource "aws_autoscaling_group" "asg" {
   desired_capacity          = 3
   health_check_type         = "ELB"
   health_check_grace_period = 300
-  vpc_zone_identifier       = module.vpc.public_subnets
+  vpc_zone_identifier       = aws_subnet.publicsubnets.id
 
   target_group_arns     = [aws_lb_target_group.target_group.arn]
   protect_from_scale_in = true

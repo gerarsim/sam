@@ -3,13 +3,13 @@ output "dns_load_balancer" {
 }
 
 output "vpc_id" {
-  value = module.vpc.vpc_id
+  value = aws_vpc.Main.id
 }
 
 output "public_subnets" {
-  value = module.vpc.public_subnets
+  value = aws_subnet.publicsubnets.id
 }
 
 output "igw_id" {
-  value = module.vpc.igw_id
+  value = aws_internet_gateway.IGW.id
 }

@@ -2,7 +2,7 @@ resource "aws_lb" "lb" {
   name               = "ecs-lb"
   load_balancer_type = "application"
   internal           = false
-  subnets            = module.vpc.public_subnets
+  subnets            = aws_subnet.publicsubnets.id
   tags = {
     "env"       = "dev"
     "createdBy" = "mkerimova"
@@ -12,7 +12,7 @@ resource "aws_lb" "lb" {
 
 resource "aws_security_group" "security_group" {
   name   = "allow-all-lb"
-  vpc_id = data.aws_vpc.main.id
+  vpc_id = aws_vpc.Main.id
   ingress {
     from_port   = 0
     to_port     = 0
@@ -37,7 +37,7 @@ resource "aws_lb_target_group" "target_group" {
   port        = "80"
   protocol    = "HTTP"
   target_type = "instance"
-  vpc_id      = data.aws_vpc.main.id
+  vpc_id      = aws_vpc.Main.id
   health_check {
     path                = "/"
     healthy_threshold   = 2
